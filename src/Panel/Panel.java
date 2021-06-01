@@ -8,10 +8,29 @@ import java.util.Scanner;
 
 
 public class Panel {
+    /**
+     * Init Variables
+     *
+     * int error:  1
+     * int help:   2
+     * int info:   4
+     * int prompt: 8
+     * These are for the bitwise operations used inside Status
+     *
+     * String[] options: look up table for all the options available
+     * List of Definition - display: List currently being handled will be stored in this.display
+     *
+     */
     private final int error = 1, help = 2, info = 4, prompt = 8;
     private final String[] options = {"!q", "!help", "distinct", "reverse", "noun", "verb", "adverb", "adjective", "pronoun", "preposition", "conjunction", "interjection"};
     private List<Definition> display;
 
+    /**
+     * notFound is used when user input was not recognized
+     * Prints out error message to user
+     * @param index will be the n_th phrase that is considered as the user's input
+     * @param option users input that was not recognized
+     */
     public void notFound(int index, String option) {
         final String[] error_status = {"is NOT a part of speech", "is NOT a 'distinct'", "was disregarded" };
         for (String errorStatus : error_status)
@@ -20,6 +39,16 @@ public class Panel {
         System.out.printf("\t<parameter: %d - should be a part of speech or 'distinct' / 'reverse'.>\t|\n", index);
     }
 
+    /**
+     * Status is used to print out error, help, info and prompt messages to user
+     * @param flag Integer that will be bit masked to see what options were selected
+     * @apiNote Error: 1
+     * @apiNote Help: 2
+     * @apiNote Info: 4
+     * @apiNote Prompt: 8
+     * Example: To print Help then a prompt, you need to 'or' the values
+     * status(2 | 8) or status(help | prompt), both will print help menu then prompt users input
+     */
     public void status(int flag) {
 
         if((flag & error) > 0) {
@@ -45,11 +74,20 @@ public class Panel {
         }
     }
 
+    /**
+     * Start will start a loop awaiting users input
+     * Any: {Part of Speech} / {Distinct} / {Reverse}
+     * Order of 'Any' does not matter.
+     * @apiNote Users input should consist of {Word} {Any} {Any} {Any}
+     * Loop will end when !q is entered by user
+     */
     public void start() {
         status(info);
         while(true){
             status(prompt);
-            String[] user_input = getInput();
+            Scanner sc = new Scanner(System.in);
+            String searchKey = sc.nextLine();
+            String[] user_input = searchKey.split(" ");
             if (user_input.length <= 0  || user_input.length > 4 || user_input[0].equalsIgnoreCase(options[0])) break;
             if(user_input[0].equalsIgnoreCase(options[1])) status(help);
             if(!Controller.lookup_table.contains(user_input[0])) {
@@ -63,6 +101,12 @@ public class Panel {
         }
     }
 
+    /**
+     * Option will validate the options other than the word
+     * valid options consist of {Part of Speech}, {Distinct}, {Reverse}
+     *
+     * @apiNote If option not found, it will call nofFound method
+     */
     public void option(String check, int index) {
         if(check.equals(options[2])) {
             this.display = Controller.remove_duplicates(this.display);
@@ -78,12 +122,6 @@ public class Panel {
                 return;
             }
         notFound(index, check);
-    }
-
-    public String[] getInput(){
-        Scanner sc = new Scanner(System.in);
-        String searchKey = sc.nextLine();
-        return searchKey.split(" ");
     }
 
 }

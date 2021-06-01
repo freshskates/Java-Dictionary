@@ -4,11 +4,19 @@ import Controllers.Definition;
 
 import java.util.Arrays;
 import java.util.List;
-
 import static Controllers.Controller.lookup_table;
 import static Controllers.Controller.count;
-
 public enum Data {
+    /**
+     * This Enum is used as the initial data storage, not optimal for client usage
+     * because to add more words, you would need access to source code
+     *
+     * Enum acts like an Unordered-Hashmap, therefore no need for hashmaps to be created in future
+     * Word Retrieval: O(1) Time Complexity
+     *
+     * @see Controllers.Controller for Enum Data Handler
+     * @see Panel.Panel for Data usage
+     */
 
     book(Arrays.asList(
             new Definition("noun", "A set of pages."),
@@ -61,15 +69,23 @@ public enum Data {
             new Definition("verb", "To be updated..."),
             new Definition("verb", "Turn something inside out.")
     ));
-
     private final List<Definition> definitions;
 
+    /**
+     * Constructor inside Enum that sets an array of Definition's
+     * @see this.definitions
+     * @param definitions List of Definitions, storing a Part of Speech and a Meaning
+     */
     Data(List<Definition> definitions) {
         lookup_table.add(this.name());
         count += definitions.size();
         this.definitions = definitions;
     }
 
+    /**
+     * Getter for this.definitions
+     * @return Mutable List of Definitions
+     */
     public List<Definition> getDefinitions() {
         return this.definitions;
     }
