@@ -19,6 +19,7 @@ public class Panel {
      *
      * String[] options: look up table for all the options available
      * List of Definition - display: List currently being handled will be stored in this.display
+     * @see Data for data that Panel Class will be handling
      *
      */
     private final int error = 1, help = 2, info = 4, prompt = 8;
