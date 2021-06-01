@@ -1,17 +1,14 @@
 package Panel;
 
-import Factory.Words.Data;
-import Factory.Words;
-import Handler.Definition;
-import java.util.Collections;
-import java.util.Comparator;
+import Builder.Data;
+import Controllers.Controller;
+import Controllers.Definition;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 
 public class Panel {
-    int error = 1, help = 2, info = 4, prompt = 8;
+    private final int error = 1, help = 2, info = 4, prompt = 8;
     private final String[] options = {"!q", "!help", "distinct", "reverse", "noun", "verb", "adverb", "adjective", "pronoun", "preposition", "conjunction", "interjection"};
     private List<Definition> display;
 
@@ -40,7 +37,7 @@ public class Panel {
             System.out.println("! Loading completed...\n");
             System.out.println("===== DICTIONARY 340 JAVA =====");
             System.out.printf("----- Keywords: %d\n", Data.values().length);
-            System.out.printf("----- Definitions: %d\n", Words.count);
+            System.out.printf("----- Definitions: %d\n", Controller.count);
         }
 
         if((flag & prompt) > 0) {
@@ -55,48 +52,32 @@ public class Panel {
             String[] user_input = getInput();
             if (user_input.length <= 0  || user_input.length > 4 || user_input[0].equalsIgnoreCase(options[0])) break;
             if(user_input[0].equalsIgnoreCase(options[1])) status(help);
-            if(!Words.lookup_table.contains(user_input[0])) {
+            if(!Controller.lookup_table.contains(user_input[0])) {
                 status(error);
                 continue;
             }
             this.display = Data.valueOf(user_input[0].toLowerCase()).getDefinitions();
-            this.sort_list();
+            Controller.sort_list(this.display);
             for (int i = 1; i < user_input.length; i++) option(user_input[i], i);
-            Words.print(this.display);
+            Controller.print(this.display);
         }
     }
 
     public void option(String check, int index) {
         if(check.equals(options[2])) {
-            remove_duplicates();
+            this.display = Controller.remove_duplicates(this.display);
             return;
         }
         else if(check.equals(options[3])) {
-            reverse_list();
+            Controller.reverse_list(this.display);
             return;
         }
         for(int i = 2; i < options.length; i++)
             if(check.equals(options[i])) {
-                filter_list(options[i]);
+                this.display = Controller.filter_list(this.display, options[i]);
                 return;
             }
         notFound(index, check);
-    }
-
-    public void remove_duplicates() {
-        this.display = this.display.stream().distinct().collect(Collectors.toList());
-    }
-
-    public void filter_list(String input_pos) {
-        this.display = this.display.stream().filter(c -> c.pos().equalsIgnoreCase(input_pos)).collect(Collectors.toList());
-    }
-
-    public void reverse_list() {
-        Collections.reverse(this.display);
-    }
-
-    public void sort_list() {
-        this.display.sort(Comparator.comparing(Definition::meaning));
     }
 
     public String[] getInput(){
