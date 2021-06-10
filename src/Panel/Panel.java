@@ -22,7 +22,9 @@ public class Panel {
      * @see Data for data that Panel Class will be handling
      *
      */
+    private int count = 0;
     private final int error = 1, help = 2, info = 4, prompt = 8;
+    private final int[] used = {0, 0};
     private final String[] options = {"!q", "!help", "distinct", "reverse", "noun", "verb", "adverb", "adjective", "pronoun", "preposition", "conjunction", "interjection"};
     private List<Definition> display;
 
@@ -40,6 +42,12 @@ public class Panel {
         System.out.printf("\t<parameter: %d - should be a part of speech or 'distinct' / 'reverse'.>\t|\n", index);
     }
 
+    public void show() {
+        System.out.println("|");
+        Controller.print(this.display);
+        System.out.println("|");
+    }
+
     /**
      * Status is used to print out error, help, info and prompt messages to user
      * @param flag Integer that will be bit masked to see what options were selected
@@ -53,13 +61,13 @@ public class Panel {
     public void status(int flag) {
 
         if((flag & error) > 0) {
-            System.out.println("\t<Not found> To be considered for the next release. Thank you.");
+            System.out.println("|\n\t<Not found> To be considered for the next release. Thank you.\n|\n");
         }
 
         if((flag & help) > 0) {
-        System.out.println("\tPARAMETER HOW-T0, please enter:");
-        System.out.println("\t1. A search key -then 2. An optional part of speech -then");
-        System.out.println("\t3. An optional 'distinct' -then 4. An optional 'reverse'");
+        System.out.print("|\n\tPARAMETER HOW-T0, please enter:\n");
+        System.out.print("\t1. A search key -then 2. An optional part of speech -then\n");
+        System.out.print("\t3. An optional 'distinct' -then 4. An optional 'reverse'\n|\n");
         }
 
         if((flag & info) > 0) {
@@ -71,7 +79,7 @@ public class Panel {
         }
 
         if((flag & prompt) > 0) {
-            System.out.println("Enter a word to search: ");
+            System.out.printf("Search [%d]: ", this.count);
         }
     }
 
@@ -84,21 +92,33 @@ public class Panel {
      */
     public void start() {
         status(info);
-        while(true){
+        while(true) {
+            ++this.count;
             status(prompt);
             Scanner sc = new Scanner(System.in);
             String searchKey = sc.nextLine();
             String[] user_input = searchKey.split(" ");
-            if (user_input.length <= 0  || user_input.length > 4 || user_input[0].equalsIgnoreCase(options[0])) break;
-            if(user_input[0].equalsIgnoreCase(options[1])) status(help);
-            if(!Controller.lookup_table.contains(user_input[0])) {
+
+            if(user_input[0].length() == 0) {
+                status(help);
+                break;
+            }
+
+            if (user_input.length > 4 || user_input[0].equalsIgnoreCase(options[0])) break;
+            if(user_input[0].equalsIgnoreCase(options[1])) {
+                status(help);
+                continue;
+            }
+            if(!Controller.lookup_table.contains(user_input[0].toLowerCase())) {
                 status(error);
                 continue;
             }
+
             this.display = Data.valueOf(user_input[0].toLowerCase()).getDefinitions();
             Controller.sort_list(this.display);
             for (int i = 1; i < user_input.length; i++) option(user_input[i], i);
-            Controller.print(this.display);
+            show();
+
         }
     }
 
