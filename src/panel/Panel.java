@@ -24,7 +24,6 @@ public class Panel {
      */
     private int count = 0;
     private final int error = 1, help = 2, info = 4, prompt = 8;
-    private final int[] used = {0, 0};
     private final String[] options = {"!q", "!help", "distinct", "reverse", "noun", "verb", "adverb", "adjective", "pronoun", "preposition", "conjunction", "interjection"};
     private List<Definition> display;
 
