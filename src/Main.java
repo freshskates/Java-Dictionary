@@ -1,4 +1,4 @@
-import Panel.Panel;
+import panel.Panel;
 
 public class Main {
     /**

@@ -1,8 +1,8 @@
-package Panel;
+package panel;
 
-import Builder.Data;
-import Controllers.Controller;
-import Controllers.Definition;
+import builder.Data;
+import controllers.Controller;
+import controllers.Definition;
 import java.util.List;
 import java.util.Scanner;
 

@@ -1,11 +1,11 @@
-package Builder;
+package builder;
 
-import Controllers.Definition;
+import controllers.Definition;
 
 import java.util.Arrays;
 import java.util.List;
-import static Controllers.Controller.lookup_table;
-import static Controllers.Controller.count;
+import static controllers.Controller.lookup_table;
+import static controllers.Controller.count;
 public enum Data {
     /**
      * This Enum is used as the initial data storage, not optimal for client usage
@@ -14,8 +14,8 @@ public enum Data {
      * Enum acts like an Unordered-Hashmap, therefore no need for hashmaps to be created in future
      * Word Retrieval: O(1) Time Complexity
      *
-     * @see Controllers.Controller for Enum Data Handler
-     * @see Panel.Panel for Data usage
+     * @see controllers.Controller for Enum Data Handler
+     * @see panel.Panel for Data usage
      */
 
     book(Arrays.asList(

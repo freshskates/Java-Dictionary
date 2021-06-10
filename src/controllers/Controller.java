@@ -1,6 +1,6 @@
-package Controllers;
+package controllers;
 
-import Panel.Panel;
+import panel.Panel;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -10,11 +10,11 @@ public class Controller {
      * Init Variables
      *
      * count: Amount of Definitions, this is set by the Data Enum
-     * @see Builder.Data constructor for count increment usage
+     * @see builder.Data constructor for count increment usage
      *
      * lookup_table: HashSet of all the words that have definitions
      * this was made to enhance performance when checking if word exists in enum.
-     * @see Builder.Data constructor for Hashset word addition
+     * @see builder.Data constructor for Hashset word addition
      *
      * Another O(1) Time Complexity approach considered was to use .valueOf('Enum Value'),
      * however it would throw an Exception if value does not exist inside. Surrounding this with
