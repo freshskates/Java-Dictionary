@@ -128,7 +128,7 @@ public class Panel {
      */
     public void option(String check, int index) {
         if(check.equals(options[2])) {
-            this.display = Controller.remove_duplicates(this.display);
+            this.display = Controller.removeDuplicates(this.display);
             return;
         }
         else if(check.equals(options[3])) {

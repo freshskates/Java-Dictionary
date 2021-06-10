@@ -42,7 +42,7 @@ public class Controller {
      * @return List with only Unique Definitions
      * @see Panel for usage
      */
-    public static List<Definition> remove_duplicates(List<Definition> definitions) {
+    public static List<Definition> removeDuplicates(List<Definition> definitions) {
         return definitions.stream().distinct().collect(Collectors.toList());
     }
 
