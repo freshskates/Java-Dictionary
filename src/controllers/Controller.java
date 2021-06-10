@@ -55,7 +55,7 @@ public class Controller {
      * @return Mutable List filtered with only the Part of Speech passed in
      * @see Panel for usage
      */
-    public static List<Definition> filter_list(List<Definition> definitions, String input_pos) {
+    public static List<Definition> filterList(List<Definition> definitions, String input_pos) {
         return definitions.stream().filter(c -> c.pos().equalsIgnoreCase(input_pos)).collect(Collectors.toList());
     }
 
@@ -66,7 +66,7 @@ public class Controller {
      * @param definitions Requires a List of Definition's to use
      * @see Panel for usage
      */
-    public static void reverse_list(List<Definition> definitions) {
+    public static void reverseList(List<Definition> definitions) {
         Collections.reverse(definitions);
     }
 
@@ -77,7 +77,7 @@ public class Controller {
      * @param definitions Requires a List of Definition's to use
      * @see Panel for usage
      */
-    public static void sort_list(List<Definition> definitions) {
+    public static void sortList(List<Definition> definitions) {
         definitions.sort(Comparator.comparing(Definition::meaning));
     }
 

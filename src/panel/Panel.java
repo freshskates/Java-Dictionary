@@ -6,15 +6,14 @@ import controllers.Definition;
 import java.util.List;
 import java.util.Scanner;
 
-
 public class Panel {
     /**
      * Init Variables
      *
-     * int error:  1
-     * int help:   2
-     * int info:   4
-     * int prompt: 8
+     * int error:  1 0x00000001
+     * int help:   2 0x00000010
+     * int info:   4 0x00000100
+     * int prompt: 8 0x00001000
      * These are for the bitwise operations used inside Status
      *
      * String[] options: look up table for all the options available
@@ -114,7 +113,7 @@ public class Panel {
             }
 
             this.display = Data.valueOf(user_input[0].toLowerCase()).getDefinitions();
-            Controller.sort_list(this.display);
+            Controller.sortList(this.display);
             for (int i = 1; i < user_input.length; i++) option(user_input[i], i);
             show();
 
@@ -133,12 +132,12 @@ public class Panel {
             return;
         }
         else if(check.equals(options[3])) {
-            Controller.reverse_list(this.display);
+            Controller.reverseList(this.display);
             return;
         }
         for(int i = 2; i < options.length; i++)
             if(check.equals(options[i])) {
-                this.display = Controller.filter_list(this.display, options[i]);
+                this.display = Controller.filterList(this.display, options[i]);
                 return;
             }
         notFound(index, check);
