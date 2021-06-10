@@ -3,4 +3,5 @@
 
 Dictionary Using Enums
 <br />
-![image](https://user-images.githubusercontent.com/67438520/120289709-6caae280-c276-11eb-8a73-e05af3e3712b.png)
+![image](https://user-images.githubusercontent.com/67438520/121461122-1d923b00-c963-11eb-9381-2479ba1d5b39.png)
+
