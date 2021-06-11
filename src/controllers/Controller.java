@@ -31,8 +31,8 @@ public class Controller {
      * @see Panel for usage
      */
     public static void print(List<Definition> definitions, String word) {
-        word = word.substring(0,1).toUpperCase() + word.substring(1);
-        for(Definition x : definitions) System.out.printf("\t%s [%s] : %s\n",word, x.pos(), x.meaning());
+        String normalizedWord = word.substring(0,1).toUpperCase() + word.substring(1);
+        for(Definition x : definitions) System.out.printf("\t%s [%s] : %s\n",normalizedWord, x.pos(), x.meaning());
     }
 
     /**
