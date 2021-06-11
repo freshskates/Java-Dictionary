@@ -35,10 +35,12 @@ public class Panel {
 
     /**
      * Start will start a loop awaiting users input
-     * Any: {Part of Speech} / {Distinct} / {Reverse}
-     * Order of 'Any' does not matter.
-     * @apiNote Users input should consist of {Word} {Any} {Any} {Any}
-     * Loop will end when !q is entered by user
+     * Part of speech only 2nd parameter
+     * Distinct up to 3rd parameter
+     * Reverse up to 4th parameter
+     * @apiNote Users input should consist of {Word} {{Part of Speech}} {Distinct} {Reverse}
+     * !q for graceful exit
+     * !help for help
      */
     public void start() {
         status(info);
