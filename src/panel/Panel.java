@@ -3,6 +3,7 @@ package panel;
 import builder.Data;
 import controllers.Controller;
 import controllers.Definition;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -10,10 +11,11 @@ public class Panel {
     /**
      * Init Variables
      *
-     * int error:  1 0x00000001
-     * int help:   2 0x00000010
-     * int info:   4 0x00000100
-     * int prompt: 8 0x00001000
+     * int notFound: 1 0x00000001
+     * int help:   2   0x00000010
+     * int info:   4   0x00000100
+     * int prompt: 8   0x00001000
+     * int exit: 16    0x00010000
      * These are for the bitwise operations used inside Status
      *
      * String[] options: look up table for all the options available
@@ -22,43 +24,93 @@ public class Panel {
      *
      */
     private int count = 0;
-    private final int error = 1, help = 2, info = 4, prompt = 8;
-    private final String[] options = {"!q", "!help", "distinct", "reverse", "noun", "verb", "adverb", "adjective", "pronoun", "preposition", "conjunction", "interjection"};
+    private final int notFound = 1, help = 2, info = 4, prompt = 8, exit = 16;
+    private final String[] partOfSpeeches = {"noun", "verb", "adverb", "adjective", "pronoun", "preposition", "conjunction", "interjection"};
+    private final String[] options = {"!q", "!help", "distinct", "reverse"};
     private List<Definition> display;
 
-    /**
-     * notFound is used when user input was not recognized
-     * Prints out error message to user
-     * @param index will be the n_th phrase that is considered as the user's input
-     * @param option users input that was not recognized
-     */
-    public void notFound(int index, String option) {
-        final String[] error_status = {"is NOT a part of speech", "is NOT a 'distinct'", "was disregarded" };
-        for (String errorStatus : error_status)
-            System.out.printf("\t|\t<parameter: %d - %s %s.>\n", index , option, errorStatus);
 
-        System.out.printf("\t<parameter: %d - should be a part of speech or 'distinct' / 'reverse'.>\t|\n", index);
+    /**
+     * Start will start a loop awaiting users input
+     * Any: {Part of Speech} / {Distinct} / {Reverse}
+     * Order of 'Any' does not matter.
+     * @apiNote Users input should consist of {Word} {Any} {Any} {Any}
+     * Loop will end when !q is entered by user
+     */
+    public void start() {
+        status(info);
+        Scanner sc = new Scanner(System.in);
+
+        while(true) {
+            ++this.count;
+            status(prompt);
+            String searchKey = sc.nextLine();
+            String[] user_input = searchKey.split(" ");
+
+            if(user_input[0].length() == 0 || user_input.length > 4) {
+                status(help);
+                continue;
+            }
+
+            if (user_input[0].equalsIgnoreCase(options[0])) break;
+            if(user_input[0].equalsIgnoreCase(options[1])) {
+                status(help);
+                continue;
+            }
+
+            if(!Controller.lookup_table.contains(user_input[0].toLowerCase())) {
+                status(notFound);
+                continue;
+            }
+
+            this.display = Data.valueOf(user_input[0].toLowerCase()).getDefinitions();
+            for (int i = 1; i < user_input.length; i++) option(user_input[i].toLowerCase(), i);
+            show(Data.valueOf(user_input[0].toLowerCase()).name());
+        }
+        status(exit);
     }
 
-    public void show() {
-        System.out.println("|");
-        Controller.print(this.display);
-        System.out.println("|");
+    /**
+     * Option will validate the options other than the word
+     * valid options consist of {Part of Speech}, {Distinct}, {Reverse}
+     *
+     * @apiNote If option not found, it will call nofFound method
+     */
+    public void option(String check, int index) {
+        for(int i = 0; i < partOfSpeeches.length && index == 1; i++)
+            if(check.equals(partOfSpeeches[i])) {
+                this.display = Controller.filterList(this.display, partOfSpeeches[i]);
+                return;
+            }
+
+        if(check.equals(options[2]) && index < 3) {
+            this.display = Controller.removeDuplicates(this.display);
+            return;
+        }
+
+        if(check.equals(options[3])) {
+            Controller.reverseList(this.display);
+            return;
+        }
+
+        error(index, check);
     }
 
     /**
      * Status is used to print out error, help, info and prompt messages to user
      * @param flag Integer that will be bit masked to see what options were selected
-     * @apiNote Error: 1
-     * @apiNote Help: 2
-     * @apiNote Info: 4
-     * @apiNote Prompt: 8
+     * @apiNote notFound:  1     0x00000001
+     * @apiNote Help:   2        0x00000010
+     * @apiNote Info:   4        0x00000100
+     * @apiNote Prompt: 8        0x00001000
+     * @apiNote exit: 16         0x00010000
+     * Bitmask: Popular approach in many big libraries to increase flexibility
      * Example: To print Help then a prompt, you need to 'or' the values
      * status(2 | 8) or status(help | prompt), both will print help menu then prompt users input
      */
     public void status(int flag) {
 
-        if((flag & error) > 0) {
+        if((flag & notFound) > 0) {
             System.out.println("|\n\t<Not found> To be considered for the next release. Thank you.\n|\n");
         }
 
@@ -79,68 +131,34 @@ public class Panel {
         if((flag & prompt) > 0) {
             System.out.printf("Search [%d]: ", this.count);
         }
-    }
 
-    /**
-     * Start will start a loop awaiting users input
-     * Any: {Part of Speech} / {Distinct} / {Reverse}
-     * Order of 'Any' does not matter.
-     * @apiNote Users input should consist of {Word} {Any} {Any} {Any}
-     * Loop will end when !q is entered by user
-     */
-    public void start() {
-        status(info);
-        while(true) {
-            ++this.count;
-            status(prompt);
-            Scanner sc = new Scanner(System.in);
-            String searchKey = sc.nextLine();
-            String[] user_input = searchKey.split(" ");
-
-            if(user_input[0].length() == 0) {
-                status(help);
-                break;
-            }
-
-            if (user_input.length > 4 || user_input[0].equalsIgnoreCase(options[0])) break;
-            if(user_input[0].equalsIgnoreCase(options[1])) {
-                status(help);
-                continue;
-            }
-            if(!Controller.lookup_table.contains(user_input[0].toLowerCase())) {
-                status(error);
-                continue;
-            }
-
-            this.display = Data.valueOf(user_input[0].toLowerCase()).getDefinitions();
-            Controller.sortList(this.display);
-            for (int i = 1; i < user_input.length; i++) option(user_input[i], i);
-            show();
-
+        if((flag & exit) > 0) {
+            System.out.println("-----THANK YOU-----");
         }
     }
 
     /**
-     * Option will validate the options other than the word
-     * valid options consist of {Part of Speech}, {Distinct}, {Reverse}
-     *
-     * @apiNote If option not found, it will call nofFound method
+     * notFound is used when user input was not recognized
+     * Prints out error message to user
+     * @param index will be the n_th phrase that is considered as the user's input
+     * @param option users input that was not recognized
      */
-    public void option(String check, int index) {
-        if(check.equals(options[2])) {
-            this.display = Controller.removeDuplicates(this.display);
-            return;
-        }
-        else if(check.equals(options[3])) {
-            Controller.reverseList(this.display);
-            return;
-        }
-        for(int i = 2; i < options.length; i++)
-            if(check.equals(options[i])) {
-                this.display = Controller.filterList(this.display, options[i]);
-                return;
-            }
-        notFound(index, check);
+    public void error(int index, String option) {
+        final String[] opts = {"a part of speech", "'distinct'", "'reverse"};
+        final String[] suffix = {"nd", "rd", "th"};
+        final String param = (index + 1) + suffix[index - 1];
+        System.out.println("\t|");
+
+        for (int i = index - 1; i < opts.length; i++)
+            System.out.printf("\t<The entered %s parameter '%s' is NOT %s.>\n", param , option, opts[i]);
+        System.out.printf("\t<The entered %s parameter '%s' was disregarded.>\n", param , option);
+        System.out.printf("\t<The %s parameter should be %s.>\n\t|\n", param, String.join(" or ", Arrays.copyOfRange(opts, index - 1, opts.length)));
+    }
+
+    public void show(String word) {
+        System.out.println("\t|");
+        Controller.print(this.display, word);
+        System.out.println("\t|");
     }
 
 }

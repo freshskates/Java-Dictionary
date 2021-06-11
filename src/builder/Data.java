@@ -68,7 +68,62 @@ public enum Data {
             new Definition("verb", "To be updated..."),
             new Definition("verb", "To be updated..."),
             new Definition("verb", "Turn something inside out.")
+    )),
+
+    robert(Arrays.asList(
+            new Definition("noun", "my name is robert."),
+            new Definition("noun", "To be updated...")
+    )),
+
+    iphone(Arrays.asList(
+            new Definition("noun", "iPhone is an apple product."),
+            new Definition("noun", "To be updated...")
+    )),
+
+    discord(Arrays.asList(
+            new Definition("noun", "To be updated..."),
+            new Definition("noun", "To be updated...")
+    )),
+
+    skype(Arrays.asList(
+            new Definition("noun", "To be updated..."),
+            new Definition("noun", "To be updated...")
+    )),
+    run(Arrays.asList(
+            new Definition("noun", "To be updated...")
+    )),
+    make(Arrays.asList(
+            new Definition("noun", "To be updated...")
+    )),
+    set(Arrays.asList(
+            new Definition("noun", "To be updated...")
+    )),
+    apple(Arrays.asList(
+            new Definition("noun", "To be updated...")
+    )),
+    pear(Arrays.asList(
+            new Definition("noun", "To be updated...")
+    )),
+    brown(Arrays.asList(
+            new Definition("noun", "To be updated...")
+    )),
+    crayons(Arrays.asList(
+            new Definition("noun", "To be updated..."),
+            new Definition("noun", "To be updated...")
+    )),
+    tacos(Arrays.asList(
+            new Definition("noun", "To be updated..."),
+            new Definition("noun", "To be updated...")
+    )),
+    covid(Arrays.asList(
+            new Definition("noun", "To be updated..."),
+            new Definition("noun", "To be updated...")
+    )),
+    fish(Arrays.asList(
+            new Definition("noun", "To be updated..."),
+            new Definition("noun", "To be updated...")
     ));
+
     private final List<Definition> definitions;
 
     /**

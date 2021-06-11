@@ -30,8 +30,9 @@ public class Controller {
      * @param definitions Requires a List of Definition's to use
      * @see Panel for usage
      */
-    public static void print(List<Definition> definitions) {
-        for(Definition x : definitions) System.out.printf("[%s] %s\n", x.pos(), x.meaning());
+    public static void print(List<Definition> definitions, String word) {
+        word = word.substring(0,1).toUpperCase() + word.substring(1);
+        for(Definition x : definitions) System.out.printf("\t%s [%s] : %s\n",word, x.pos(), x.meaning());
     }
 
     /**
@@ -68,17 +69,6 @@ public class Controller {
      */
     public static void reverseList(List<Definition> definitions) {
         Collections.reverse(definitions);
-    }
-
-    /**
-     * Sort List of Definitions
-     * Using Lambda Functions introduced in Java 8 to sort
-     * Mutates List inside function, therefore no return value
-     * @param definitions Requires a List of Definition's to use
-     * @see Panel for usage
-     */
-    public static void sortList(List<Definition> definitions) {
-        definitions.sort(Comparator.comparing(Definition::meaning));
     }
 
 }
