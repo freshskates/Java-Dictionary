@@ -24,7 +24,11 @@ public class Panel {
      *
      */
     private int count = 0;
-    private final int notFound = 1, help = 2, info = 4, prompt = 8, exit = 16;
+    private final int notFound = 1,
+            help = 2,
+            info = 4,
+            prompt = 8,
+            exit = 16;
     private final String[] partOfSpeeches = {"noun", "verb", "adverb", "adjective", "pronoun", "preposition", "conjunction", "interjection"};
     private final String[] options = {"!q", "!help", "distinct", "reverse"};
     private List<Definition> display;
