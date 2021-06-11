@@ -143,7 +143,7 @@ public class Panel {
      * @param option users input that was not recognized
      */
     public void error(int index, String option) {
-        final String[] opts = {"a part of speech", "'distinct'", "'reverse"};
+        final String[] opts = {"a part of speech", "'distinct'", "'reverse'"};
         final String[] suffix = {"nd", "rd", "th"};
         final String param = (index + 1) + suffix[index - 1];
         System.out.println("\t|");
