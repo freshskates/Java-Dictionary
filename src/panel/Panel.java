@@ -29,7 +29,6 @@ public class Panel {
     private final String[] options = {"!q", "!help", "distinct", "reverse"};
     private List<Definition> display;
 
-
     /**
      * Start will start a loop awaiting users input
      * Any: {Part of Speech} / {Distinct} / {Reverse}
@@ -47,16 +46,12 @@ public class Panel {
             String searchKey = sc.nextLine();
             String[] user_input = searchKey.split(" ");
 
-            if(user_input[0].length() == 0 || user_input.length > 4) {
+            if(user_input[0].length() == 0 || user_input.length > 4 || user_input[0].equalsIgnoreCase(options[1])) {
                 status(help);
                 continue;
             }
 
             if (user_input[0].equalsIgnoreCase(options[0])) break;
-            if(user_input[0].equalsIgnoreCase(options[1])) {
-                status(help);
-                continue;
-            }
 
             if(!Controller.lookup_table.contains(user_input[0].toLowerCase())) {
                 status(notFound);
