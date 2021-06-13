@@ -12,10 +12,10 @@ public class Panel {
      * Init Variables
      *
      * int notFound: 1 0x00000001
-     * int help:   2   0x00000010
-     * int info:   4   0x00000100
-     * int prompt: 8   0x00001000
-     * int exit: 16    0x00010000
+     * int help:     2 0x00000010
+     * int info:     4 0x00000100
+     * int prompt:   8 0x00001000
+     * int exit:    16 0x00010000
      * These are for the bitwise operations used inside Status
      *
      * String[] options: look up table for all the options available
@@ -101,10 +101,10 @@ public class Panel {
      * Status is used to print out error, help, info and prompt messages to user
      * @param flag Integer that will be bit masked to see what options were selected
      * @apiNote notFound:  1     0x00000001
-     * @apiNote Help:   2        0x00000010
-     * @apiNote Info:   4        0x00000100
-     * @apiNote Prompt: 8        0x00001000
-     * @apiNote exit: 16         0x00010000
+     * @apiNote Help:      2     0x00000010
+     * @apiNote Info:      4     0x00000100
+     * @apiNote Prompt:    8     0x00001000
+     * @apiNote exit:     16     0x00010000
      * Bitmask: Popular approach in many big libraries to increase flexibility
      * Example: To print Help then a prompt, you need to 'or' the values
      * status(2 | 8) or status(help | prompt), both will print help menu then prompt users input
