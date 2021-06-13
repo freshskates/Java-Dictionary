@@ -77,7 +77,7 @@ public class Panel {
      *
      * @apiNote If option not found, it will call nofFound method
      */
-    public void option(String check, int index) {
+    private void option(String check, int index) {
         for(int i = 0; i < partOfSpeeches.length && index == 1; i++)
             if(check.equals(partOfSpeeches[i])) {
                 this.display = Controller.filterList(this.display, partOfSpeeches[i]);
@@ -109,7 +109,7 @@ public class Panel {
      * Example: To print Help then a prompt, you need to 'or' the values
      * status(2 | 8) or status(help | prompt), both will print help menu then prompt users input
      */
-    public void status(int flag) {
+    private void status(int flag) {
 
         if((flag & notFound) > 0) {
             System.out.println("|\n\t<Not found> To be considered for the next release. Thank you.\n|\n");
@@ -144,7 +144,7 @@ public class Panel {
      * @param index will be the n_th phrase that is considered as the user's input
      * @param option users input that was not recognized
      */
-    public void error(int index, String option) {
+    private void error(int index, String option) {
         final String[] opts = {"a part of speech", "'distinct'", "'reverse'"};
         final String[] suffix = {"nd", "rd", "th"};
         final String param = (index + 1) + suffix[index - 1];
@@ -156,7 +156,7 @@ public class Panel {
         System.out.printf("\t<The %s parameter should be %s.>\n\t|\n", param, String.join(" or ", Arrays.copyOfRange(opts, index - 1, opts.length)));
     }
 
-    public void show(String word) {
+    private void show(String word) {
         System.out.println("\t|");
         Controller.print(this.display, word);
         System.out.println("\t|");
