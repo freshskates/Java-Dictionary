@@ -51,7 +51,7 @@ public class Panel {
         while(true) {
             ++this.count;
             status(prompt);
-            String searchKey = sc.nextLine();
+            String searchKey = sc.nextLine().toLowerCase();
             String[] user_input = searchKey.split(" ");
 
             if(user_input[0].length() == 0 || user_input.length > 4 || user_input[0].equalsIgnoreCase(options[1])) {
@@ -61,13 +61,13 @@ public class Panel {
 
             if (user_input[0].equalsIgnoreCase(options[0])) break;
 
-            if(!Controller.lookup_table.contains(user_input[0].toLowerCase())) {
+            if(!Controller.lookup_table.contains(user_input[0])) {
                 status(notFound);
                 continue;
             }
-            this.display = new ArrayList<Definition>(Data.valueOf(user_input[0].toLowerCase()).getDefinitions());
-            for (int i = 1; i < user_input.length; i++) option(user_input[i].toLowerCase(), i);
-            show(Data.valueOf(user_input[0].toLowerCase()).name());
+            this.display = new ArrayList<>(Data.valueOf(user_input[0]).getDefinitions());
+            for (int i = 1; i < user_input.length; i++) option(user_input[i], i);
+            show(Data.valueOf(user_input[0]).name());
         }
         status(exit);
     }

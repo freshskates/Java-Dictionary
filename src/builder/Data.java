@@ -131,6 +131,7 @@ public enum Data {
      * @see this.definitions
      * @param definitions List of Definitions, storing a Part of Speech and a Meaning
      */
+
     Data(List<Definition> definitions) {
         lookup_table.add(this.name());
         count += definitions.size();
