@@ -20,7 +20,7 @@ public enum Data {
 
     book(Arrays.asList(
             new Definition("noun", "A set of pages."),
-            new Definition("noun", "A set of pages."),
+            new Definition("noun", "A written work published in printed or electronic form."),
             new Definition("verb", "To arrange for someone to have a seat on a plane."),
             new Definition("verb", "To arrange something on a particular date.")
     )),
