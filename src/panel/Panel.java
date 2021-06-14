@@ -3,6 +3,8 @@ package panel;
 import builder.Data;
 import controllers.Controller;
 import controllers.Definition;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -63,8 +65,7 @@ public class Panel {
                 status(notFound);
                 continue;
             }
-
-            this.display = Data.valueOf(user_input[0].toLowerCase()).getDefinitions();
+            this.display = new ArrayList<Definition>(Data.valueOf(user_input[0].toLowerCase()).getDefinitions());
             for (int i = 1; i < user_input.length; i++) option(user_input[i].toLowerCase(), i);
             show(Data.valueOf(user_input[0].toLowerCase()).name());
         }
