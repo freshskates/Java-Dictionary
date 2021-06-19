@@ -49,7 +49,6 @@ public class Panel {
         Scanner sc = new Scanner(System.in);
 
         while(true) {
-            ++this.count;
             status(prompt);
             String searchKey = sc.nextLine().toLowerCase();
             String[] user_input = searchKey.split(" ");
@@ -65,6 +64,7 @@ public class Panel {
                 status(notFound);
                 continue;
             }
+            
             this.display = new ArrayList<>(Data.valueOf(user_input[0]).getDefinitions());
             for (int i = 1; i < user_input.length; i++) option(user_input[i], i);
             show(Data.valueOf(user_input[0]).name());
@@ -85,7 +85,7 @@ public class Panel {
                 return;
             }
 
-        if(check.equals(options[2]) && index < 3) {
+        if(check.equals(options[2]) && index <= 2) {
             this.display = Controller.removeDuplicates(this.display);
             return;
         }
@@ -131,7 +131,7 @@ public class Panel {
         }
 
         if((flag & prompt) > 0) {
-            System.out.printf("Search [%d]: ", this.count);
+            System.out.printf("Search [%d]: ", ++this.count);
         }
 
         if((flag & exit) > 0) {
